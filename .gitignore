@@ -34,7 +34,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# enviroment variables
-.env
-.env.local
+package-lock.json
