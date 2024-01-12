@@ -1,13 +1,19 @@
 'use client';
 
-import { State, createTodo } from '@/app/lib/actions';
+import React from 'react';
 import clsx from 'clsx';
 import { useFormStatus, useFormState } from 'react-dom';
+import { State, createTodo } from '@/app/lib/actions';
 
 export default function AddTask() {
   let initialState: State = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createTodo, initialState);
   const { pending } = useFormStatus();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const isError = state?.errors?.task && state.errors.task.length > 0;
 
@@ -16,11 +22,12 @@ export default function AddTask() {
       <form action={dispatch} className="flex items-center">
         <input
           className={clsx(
-            'flex-grow py-2 px-4 bg-transparent rounded-md bg-white focus:outline-none',
+            'flex-grow py-2 px-4 bg-transparent rounded-md bg-white focus:outline-blue-500',
             {
               'border border-red-500': isError,
             }
           )}
+          ref={inputRef}
           id="task"
           name="task"
           placeholder="Add a new task..."
